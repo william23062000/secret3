@@ -1,0 +1,53 @@
+<script>
+  const yesBtn = document.getElementById('yesBtn');
+  const noBtn = document.getElementById('noBtn');
+  const message = document.getElementById('message');
+  const noMessages = document.getElementById('noMessages');
+
+  const frasesNo = [
+    "¿Por qué no? 😢",
+    "Estás segura de eso...?",
+    "Piensa bien tu respuesta 🥺",
+    "No me rompas el corazón 💔",
+    "¡Pero si somos el uno para el otro!",
+    "Dímelo en broma, por favor...",
+    "Hasta Stitch está triste 🐾"
+  ];
+
+  function lanzarCorazones() {
+    for (let i = 0; i < 30; i++) {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.innerHTML = '💖';
+
+      const size = Math.random() * 40 + 10;
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.fontSize = size + "px";
+      heart.style.color = ["#ffb6c1", "#dda0dd", "#ff69b4", "#e6a8d7", "#c71585"][Math.floor(Math.random() * 5)];
+
+      document.body.appendChild(heart);
+
+      setTimeout(() => heart.remove(), 6000);
+    }
+  }
+
+  noBtn.addEventListener('click', () => {
+    // Reducir tamaño del botón "No"
+    let currentFontSize = parseFloat(window.getComputedStyle(noBtn).fontSize);
+    noBtn.style.fontSize = Math.max(10, currentFontSize - 4) + "px";
+
+    // Aumentar tamaño del botón "Sí"
+    let yesSize = parseFloat(window.getComputedStyle(yesBtn).fontSize);
+    yesBtn.style.fontSize = (yesSize + 4) + "px";
+
+    // Mostrar solo una frase a la vez
+    const randomPhrase = frasesNo[Math.floor(Math.random() * frasesNo.length)];
+    noMessages.textContent = randomPhrase;
+  });
+
+  yesBtn.addEventListener('click', () => {
+    message.style.display = 'block';
+    noMessages.textContent = ''; // Oculta frases de "no"
+    lanzarCorazones();
+  });
+</script>
